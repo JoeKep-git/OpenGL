@@ -39,7 +39,8 @@ CShader* myTextureShader;
 
 //MODEL LOADING
 #include "3DStruct\threeDModel.h"
-#include "Obj\OBJLoader.h"
+#include "..\Obj\OBJLoader.h"
+#include <future>
 
 float amount = 0;
 float temp = 0.002f;
@@ -90,6 +91,7 @@ float fDeltaTime = 0.0f;
 float currentTicks = 0.0f;
 float PreviousTicks = 0.0f;
 float timetest = 0.0f;
+float timeOfTest = 0.0f;
 int framerate = 0;
 
 float objColor[4] = { 0.5,0.2,0.8,1.0 };
@@ -115,6 +117,10 @@ void display()
 	//now find the actual time passed between frames
 	fDeltaTime = deltaTicks / (float)CLOCKS_PER_SEC;
 
+	timeOfTest += fDeltaTime;
+
+	//Finding the amount of frames in one second and then calling the printing method in
+	//the printToFile class.
 	if (timetest < 1.0)
 	{
 		timetest += fDeltaTime;
@@ -123,7 +129,12 @@ void display()
 	else
 	{
 		cout << "framerate: " << framerate << endl;
+		//look into using std::promise to have the leave main loop wait until the last frame per second is printed
 		printFile.printingMethod(framerate);
+		if (timeOfTest >= 10.0f)
+		{
+			glutLeaveMainLoop();
+		}
 		framerate = 0;
 		timetest = 0.0f;
 	}
