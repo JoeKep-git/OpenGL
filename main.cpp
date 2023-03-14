@@ -128,7 +128,7 @@ void display()
 	}
 	else
 	{
-		cout << "framerate: " << framerate << " " << timeOfTest << endl;
+		//cout << "framerate: " << framerate << " " << timeOfTest << endl;
 		//look into using std::promise to have the leave main loop wait until the last frame per second is printed
 		printFile.printingMethod(framerate);
 		if (timeOfTest >= 13.0f)
@@ -182,18 +182,15 @@ void display()
 
 	glUniformMatrix4fv(glGetUniformLocation(myShader->GetProgramObjID(), "ViewMatrix"), 1, GL_FALSE, &viewingMatrix[0][0]);
 
+	//rotateRadians += 0.01f;
 
-	/***********************ship rendering start*******************/
-
-	rotateRadians += 0.01f;
-
-	if (rotateRadians > 360)
-	{
-		rotateRadians = 0.0f;
-	}
+	//if (rotateRadians > 360)
+	//{
+	//	rotateRadians = 0.0f;
+	//}
 
 	glm::mat4 modelmatrix = glm::translate(glm::mat4(1.0f), pos);
-	modelmatrix = glm::rotate(modelmatrix, rotateRadians, glm::vec3(0.0, 1.0, 0.0));
+	//modelmatrix = glm::rotate(modelmatrix, rotateRadians, glm::vec3(0.0, 1.0, 0.0));
 	ModelViewMatrix = viewingMatrix * modelmatrix;
 	glUniformMatrix4fv(glGetUniformLocation(myShader->GetProgramObjID(), "ModelViewMatrix"), 1, GL_FALSE, &ModelViewMatrix[0][0]);
 
@@ -208,8 +205,6 @@ void display()
 	projMatLocation = glGetUniformLocation(myBasicShader->GetProgramObjID(), "ProjectionMatrix");
 	glUniformMatrix4fv(projMatLocation, 1, GL_FALSE, &ProjectionMatrix[0][0]);
 	glUniformMatrix4fv(glGetUniformLocation(myBasicShader->GetProgramObjID(), "ModelViewMatrix"), 1, GL_FALSE, &ModelViewMatrix[0][0]);
-
-	/**********************end ship rendering********************/
 
 
 	glFlush();
@@ -266,7 +261,7 @@ void init()
 
 	sphere0.setRadius(30);
 	sphere0.setCentre(0.0, 0.0, 0.0);
-	sphere0.constructGeometry(myShader, 1000);
+	sphere0.constructGeometry(myShader, 1200);
 }
 
 void special(int key, int x, int y)

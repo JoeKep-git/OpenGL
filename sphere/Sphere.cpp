@@ -1,6 +1,7 @@
 #include "Sphere.h"
 #include "..\shaders\Shader.h"
 #include "../glm/fwd.hpp"
+#include <iostream>
 
 const double PI = 3.14159265358979323846f;  
 
@@ -67,6 +68,9 @@ void Sphere::constructGeometry(CShader* myShader, int level)
 	tInds = new unsigned int[(((level-3)*(level-1) + (level-1)) * 2)*3];
 
 	numOfTris = (((level-3)*(level-1) + (level-1)) * 2);
+
+	std::cout << "Num of tris: " << numOfTris << std::endl;
+
 	numOfVerts = ((level-2)* level+2);
 
 	//populate the arrays
