@@ -1,4 +1,5 @@
 #include <iostream>
+//#include <GLFW/glfw3.h>
 using namespace std;
 
 /*
@@ -152,8 +153,6 @@ void display()
 		temp = -temp;
 	//amount = 0;
 
-	glUniform1f(glGetUniformLocation(myShader->GetProgramObjID(), "displacement"), amount);
-
 	//Set the projection matrix in the shader
 	GLuint projMatLocation = glGetUniformLocation(myShader->GetProgramObjID(), "ProjectionMatrix");
 	glUniformMatrix4fv(projMatLocation, 1, GL_FALSE, &ProjectionMatrix[0][0]);
@@ -165,29 +164,9 @@ void display()
 
 	glm::vec3 modelCoords = pos;
 
-	glUniform4fv(glGetUniformLocation(myShader->GetProgramObjID(), "light_ambient"), 1, Light_Ambient_And_Diffuse);
-	glUniform4fv(glGetUniformLocation(myShader->GetProgramObjID(), "light_diffuse"), 1, Light_Ambient_And_Diffuse);
-	glUniform4fv(glGetUniformLocation(myShader->GetProgramObjID(), "light_specular"), 1, Light_Specular);
-
-	glUniform4fv(glGetUniformLocation(myShader->GetProgramObjID(), "material_ambient"), 1, Material_Ambient);
-	glUniform4fv(glGetUniformLocation(myShader->GetProgramObjID(), "material_diffuse"), 1, Material_Diffuse);
-	glUniform4fv(glGetUniformLocation(myShader->GetProgramObjID(), "material_specular"), 1, Material_Specular);
-	glUniform1f(glGetUniformLocation(myShader->GetProgramObjID(), "material_shininess"), Material_Shininess);
-	//change colour of object using variable in basic fragment shader
-	glUniform4fv(glGetUniformLocation(myShader->GetProgramObjID(), "objectColor"), 1, objColor);
-
-
-
 	viewingMatrix = glm::lookAt(glm::vec3(30, 50, 50), glm::vec3(pos.x, pos.y, pos.z), glm::vec3(0.0f, 1.0f, 0.0));
 
 	glUniformMatrix4fv(glGetUniformLocation(myShader->GetProgramObjID(), "ViewMatrix"), 1, GL_FALSE, &viewingMatrix[0][0]);
-
-	//rotateRadians += 0.01f;
-
-	//if (rotateRadians > 360)
-	//{
-	//	rotateRadians = 0.0f;
-	//}
 
 	glm::mat4 modelmatrix = glm::translate(glm::mat4(1.0f), pos);
 	//modelmatrix = glm::rotate(modelmatrix, rotateRadians, glm::vec3(0.0, 1.0, 0.0));
@@ -195,17 +174,6 @@ void display()
 	glUniformMatrix4fv(glGetUniformLocation(myShader->GetProgramObjID(), "ModelViewMatrix"), 1, GL_FALSE, &ModelViewMatrix[0][0]);
 
 	sphere0.render();
-
-
-	glm::mat3 normalMatrix = glm::inverseTranspose(glm::mat3(ModelViewMatrix));
-	glUniformMatrix3fv(glGetUniformLocation(myShader->GetProgramObjID(), "NormalMatrix"), 1, GL_FALSE, &normalMatrix[0][0]);
-
-	//Switch to basic shader to draw the lines for the bounding boxes
-	glUseProgram(myBasicShader->GetProgramObjID());
-	projMatLocation = glGetUniformLocation(myBasicShader->GetProgramObjID(), "ProjectionMatrix");
-	glUniformMatrix4fv(projMatLocation, 1, GL_FALSE, &ProjectionMatrix[0][0]);
-	glUniformMatrix4fv(glGetUniformLocation(myBasicShader->GetProgramObjID(), "ModelViewMatrix"), 1, GL_FALSE, &ModelViewMatrix[0][0]);
-
 
 	glFlush();
 	glutSwapBuffers();
@@ -317,6 +285,7 @@ int main(int argc, char **argv)
 	glutInitWindowPosition(100, 100);
 	glutCreateWindow("OpenGL FreeGLUT Example: Obj loading");
 
+
 	//This initialises glew - it must be called after the window is created.
 	GLenum err = glewInit();
 	if (GLEW_OK != err)
@@ -333,6 +302,7 @@ int main(int argc, char **argv)
 
 	//initialise the objects for rendering
 	init();
+	wglSwapIntervalEXT(0);
 
 	glutReshapeFunc(reshape);
 	//specify which function will be called to refresh the screen.
