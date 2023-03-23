@@ -129,7 +129,7 @@ void display()
 	}
 	else
 	{
-		//cout << "framerate: " << framerate << " " << timeOfTest << endl;
+		cout << "framerate: " << framerate << " " << timeOfTest << endl;
 		//look into using std::promise to have the leave main loop wait until the last frame per second is printed
 		printFile.printingMethod(framerate);
 		if (timeOfTest >= 13.0f)
@@ -229,7 +229,7 @@ void init()
 
 	sphere0.setRadius(30);
 	sphere0.setCentre(0.0, 0.0, 0.0);
-	sphere0.constructGeometry(myShader, 1200);
+	sphere0.constructGeometry(myShader, 20);
 }
 
 void special(int key, int x, int y)
@@ -284,7 +284,6 @@ int main(int argc, char **argv)
 	glutInitWindowSize(screenWidth, screenHeight);
 	glutInitWindowPosition(100, 100);
 	glutCreateWindow("OpenGL FreeGLUT Example: Obj loading");
-
 
 	//This initialises glew - it must be called after the window is created.
 	GLenum err = glewInit();
