@@ -2,12 +2,15 @@
 
 printToFile::printToFile()
 {
-
+	myFile.open("fpsPolygonsTest.txt");
 }
 
 void printToFile::printingMethod(int fps)
 {
-	myFile.open("fpsPolygonsTest.text", ios_base::app);
-	myFile << fps << "\n";
+	myFile << fps << endl;
+}
+
+void printToFile::closeFile()
+{
 	myFile.close();
 }

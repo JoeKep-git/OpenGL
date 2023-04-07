@@ -40,7 +40,7 @@ CShader* myTextureShader;
 
 //MODEL LOADING
 #include "3DStruct\threeDModel.h"
-#include "..\Obj\OBJLoader.h"
+#include "Obj/OBJLoader.h"
 #include <future>
 
 float amount = 0;
@@ -129,11 +129,11 @@ void display()
 	}
 	else
 	{
-		cout << "framerate: " << framerate << " " << timeOfTest << endl;
-		//look into using std::promise to have the leave main loop wait until the last frame per second is printed
+		//cout << "framerate: " << framerate << " " << timeOfTest << endl;
 		printFile.printingMethod(framerate);
 		if (timeOfTest >= 13.0f)
 		{
+			printFile.closeFile();
 			glutLeaveMainLoop();
 		}
 		framerate = 0;
@@ -229,7 +229,7 @@ void init()
 
 	sphere0.setRadius(30);
 	sphere0.setCentre(0.0, 0.0, 0.0);
-	sphere0.constructGeometry(myShader, 20);
+	sphere0.constructGeometry(myShader, 2000);
 }
 
 void special(int key, int x, int y)

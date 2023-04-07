@@ -14,4 +14,5 @@ private:
 public:
 	printToFile();
 	void printingMethod(int fps);
+	void closeFile();
 };
