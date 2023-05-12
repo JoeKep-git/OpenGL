@@ -67,6 +67,10 @@
     <None Include="glslfiles\basicTransformations.vert" />
     <None Include="glslfiles\basicTransformationsWithDisplacement.frag" />
     <None Include="glslfiles\basicTransformationsWithDisplacement.vert" />
+    <None Include="glslfiles\point_light.frag" />
+    <None Include="glslfiles\point_light.vert" />
+    <None Include="glslfiles\point_light_improved.frag" />
+    <None Include="glslfiles\point_light_improved.vert" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{472FEE38-34C3-4DC2-8DFC-871F6F80345E}</ProjectGuid>

@@ -181,5 +181,17 @@
     <None Include="glslfiles\basicSpecularSpotlight.vert">
       <Filter>headers\glslfiles</Filter>
     </None>
+    <None Include="glslfiles\point_light_improved.frag">
+      <Filter>headers\glslfiles</Filter>
+    </None>
+    <None Include="glslfiles\point_light_improved.vert">
+      <Filter>headers\glslfiles</Filter>
+    </None>
+    <None Include="glslfiles\point_light.frag">
+      <Filter>headers\glslfiles</Filter>
+    </None>
+    <None Include="glslfiles\point_light.vert">
+      <Filter>headers\glslfiles</Filter>
+    </None>
   </ItemGroup>
 </Project>
