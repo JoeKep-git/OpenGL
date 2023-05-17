@@ -37,6 +37,7 @@ using namespace std;
 CShader* myShader;  ///shader object 
 CShader* myBasicShader;
 CShader* myTextureShader;
+CShader* myPointLightShader;
 
 //MODEL LOADING
 #include "3DStruct\threeDModel.h"
@@ -66,7 +67,7 @@ float Material_Specular[4] = {1.0f,1.0f,1.0f,1.0f};
 float Material_Shininess = 40;
 
 //Light Properties
-float Light_Ambient_And_Diffuse[4] = {0.9f, 0.9f, 0.9f, 1.0f};
+float Light_Ambient_And_Diffuse[4] = {0.5f, 0.5f, 0.5f, 1.0f};
 float Light_Specular[4] = {0.9f,0.9f,0.9f,1.0f};
 float LightPos[4] = {0.0f, 50.0f, 1.0f, 0.0f};
 float spotLightPos[4];
@@ -143,6 +144,25 @@ void display()
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	glUseProgram(myPointLightShader->GetProgramObjID());  // use the shader
+
+	vector<glm::vec3> pointLightColors = {
+		glm::vec3(1.0f, 1.0f, 1.0f),
+		glm::vec3(1.0f, 0.5f, 0.5f)
+	};
+
+	for (int k = 0; k < pointLightColors.size(); k++)
+	{
+		cout << k << endl;
+		/*glUniform3f(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "SpotLightPos"), 1.f, 1.f, 1.f);
+		glUniform3f(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "light_ambient"), pointLightColors[k].x * 0.1, pointLightColors[k].y * 0.1, pointLightColors[k].z * 0.1);
+		glUniform3f(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "light_diffuse"), pointLightColors[k].x, pointLightColors[k].y, pointLightColors[k].z);
+		glUniform3f(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "light_specular"), pointLightColors[k].x, pointLightColors[k].y, pointLightColors[k].z);
+		glUniform1f(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "pointLights[0].constant"), 1.0f);
+		glUniform1f(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "pointLights[0].linear"), 0.09);
+		glUniform1f(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "pointLights[0].quadratic"), 0.032);*/
+	}
+
 	glUseProgram(myShader->GetProgramObjID());  // use the shader
 
 	glCullFace(GL_BACK);
@@ -172,6 +192,8 @@ void display()
 	//modelmatrix = glm::rotate(modelmatrix, rotateRadians, glm::vec3(0.0, 1.0, 0.0));
 	ModelViewMatrix = viewingMatrix * modelmatrix;
 	glUniformMatrix4fv(glGetUniformLocation(myShader->GetProgramObjID(), "ModelViewMatrix"), 1, GL_FALSE, &ModelViewMatrix[0][0]);
+
+
 
 	sphere0.render();
 
@@ -216,6 +238,12 @@ void init()
 	{
 		cout << "failed to load texture only shader" << endl;
 	}
+	myPointLightShader = new CShader();
+	if (!myPointLightShader->CreateShaderProgram("PointLight", "glslfiles/basicSpecularSpotlight.vert", "glslfiles/basicSpecularSpotlight.frag"))
+	{
+		cout << "failed to load shader for point light" << endl;
+	}
+
 
 	glUseProgram(myShader->GetProgramObjID());  // use the shader
 
