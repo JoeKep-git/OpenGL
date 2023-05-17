@@ -68,7 +68,7 @@ void Sphere::constructGeometry(CShader* myShader, int level)
 	tInds = new unsigned int[(((level-3)*(level-1) + (level-1)) * 2)*3];
 
 	numOfTris = (((level-3)*(level-1) + (level-1)) * 2);
-
+	
 	std::cout << "Num of tris: " << numOfTris << std::endl;
 
 	numOfVerts = ((level-2)* level+2);

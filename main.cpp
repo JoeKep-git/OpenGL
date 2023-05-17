@@ -47,6 +47,8 @@ CShader* myPointLightShader;
 float amount = 0;
 float temp = 0.002f;
 	
+COBJLoader objLoader;
+CThreeDModel sphereModel;
 Sphere sphere0;
 ///END MODEL LOADING
 
@@ -132,7 +134,7 @@ void display()
 	{
 		//cout << "framerate: " << framerate << " " << timeOfTest << endl;
 		printFile.printingMethod(framerate);
-		if (timeOfTest >= 13.0f)
+		if (timeOfTest >= 23.0f)
 		{
 			printFile.closeFile();
 			glutLeaveMainLoop();
@@ -153,7 +155,6 @@ void display()
 
 	for (int k = 0; k < pointLightColors.size(); k++)
 	{
-		cout << k << endl;
 		/*glUniform3f(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "SpotLightPos"), 1.f, 1.f, 1.f);
 		glUniform3f(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "light_ambient"), pointLightColors[k].x * 0.1, pointLightColors[k].y * 0.1, pointLightColors[k].z * 0.1);
 		glUniform3f(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "light_diffuse"), pointLightColors[k].x, pointLightColors[k].y, pointLightColors[k].z);
@@ -245,6 +246,7 @@ void init()
 	}
 
 
+
 	glUseProgram(myShader->GetProgramObjID());  // use the shader
 
 	glEnable(GL_TEXTURE_2D);
@@ -255,9 +257,18 @@ void init()
 
 	cout << " loading model " << endl;
 
-	sphere0.setRadius(30);
+	/*sphere0.setRadius(30);
 	sphere0.setCentre(0.0, 0.0, 0.0);
-	sphere0.constructGeometry(myShader, 2000);
+	sphere0.constructGeometry(myShader, 20);*/
+
+	if (objLoader.LoadModel("Models/sphere.obj"))
+	{
+		sphereModel.ConstructModelFromOBJLoader(objLoader);
+
+		sphereModel.CalcCentrePoint();
+		sphereModel.CentreOnZero();
+		sphereModel.InitVBO(myShader);
+	}
 }
 
 void special(int key, int x, int y)
