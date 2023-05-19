@@ -63,7 +63,7 @@ glm::vec3 translation = glm::vec3(0.0, 0.0, 0.0);
 glm::vec3 pos = glm::vec3(0.0f,0.0f,0.0f); //vector for the position of the object.
 
 //Material properties
-float Material_Ambient[4] = {0.9f, 0.9f, 0.9f, 1.0f};
+float Material_Ambient[4] = {1.f, 1.f, 1.f, 1.0f};
 float Material_Diffuse[4] = {0.99f, 0.99f, 0.99f, 1.0f};
 float Material_Specular[4] = {1.0f,1.0f,1.0f,1.0f};
 float Material_Shininess = 40;
@@ -84,11 +84,11 @@ int screenWidth=600, screenHeight=600;
 int cam = 0;
 
 //variables for movement
-float spin=180.0f;
-float speed=0.0f;
-float strafe = 0.0f;
-float ymovement = 0.0f;
-float rotateRadians = 0.0f;
+//float spin=180.0f;
+//float speed=0.0f;
+//float strafe = 0.0f;
+//float ymovement = 0.0f;
+//float rotateRadians = 0.0f;
 
 /*Variables for timing*/
 float fDeltaTime = 0.0f;
@@ -98,7 +98,7 @@ float timetest = 0.0f;
 float timeOfTest = 0.0f;
 int framerate = 0;
 
-float objColor[4] = { 0.5,0.2,0.8,1.0 };
+//float objColor[4] = { 0.5,0.2,0.8,1.0 };
 
 glm::vec3 sphereCoordinates = glm::vec3(0.0, 0.0, 0.0);
 
@@ -166,12 +166,12 @@ void display()
 
 	glUseProgram(myShader->GetProgramObjID());  // use the shader
 
-	glCullFace(GL_BACK);
+	//glCullFace(GL_BACK);
 
 	//Part for displacement shader.
-	amount += temp;
-	if (amount > 1.0f || amount < -1.5f)
-		temp = -temp;
+	//amount += temp;
+	//if (amount > 1.0f || amount < -1.5f)
+	//	temp = -temp;
 	//amount = 0;
 
 	//Set the projection matrix in the shader
@@ -215,11 +215,13 @@ void reshape(int width, int height)		// Resize the OpenGL window
 
 void init()
 {
-	glClearColor(0.0,0.0,0.0,0.0);						
+	glClearColor(0.1,0.1,0.1,0.1);						
 														//glClear(GL_COLOR_BUFFER_BIT) in the display function
 														//will clear the buffer to this colour
 	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
+	
+	//Enable or disable culling of polygons
+	//glEnable(GL_CULL_FACE);
 
 
 	myShader = new CShader();
@@ -257,18 +259,9 @@ void init()
 
 	cout << " loading model " << endl;
 
-	/*sphere0.setRadius(30);
+	sphere0.setRadius(30);
 	sphere0.setCentre(0.0, 0.0, 0.0);
-	sphere0.constructGeometry(myShader, 20);*/
-
-	if (objLoader.LoadModel("Models/sphere.obj"))
-	{
-		sphereModel.ConstructModelFromOBJLoader(objLoader);
-
-		sphereModel.CalcCentrePoint();
-		sphereModel.CentreOnZero();
-		sphereModel.InitVBO(myShader);
-	}
+	sphere0.constructGeometry(myShader, 20);
 }
 
 void special(int key, int x, int y)
@@ -305,13 +298,13 @@ void updateTransform(float xinc, float yinc, float zinc)
 
 void idle()
 {
-	spin += speed;
-	if(spin > 360)
-		spin = 0;
+	//spin += speed;
+	//if(spin > 360)
+	//	spin = 0;
 
-	processKeys();
+	//processKeys();
 
-	glutPostRedisplay();
+	//glutPostRedisplay();
 }
 /**************** END OPENGL FUNCTIONS *************************/
 
