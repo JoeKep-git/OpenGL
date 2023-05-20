@@ -304,7 +304,8 @@ void idle()
 
 	//processKeys();
 
-	//glutPostRedisplay();
+	//call the display function again on idle
+	glutPostRedisplay();
 }
 /**************** END OPENGL FUNCTIONS *************************/
 
