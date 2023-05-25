@@ -97,10 +97,51 @@ float PreviousTicks = 0.0f;
 float timetest = 0.0f;
 float timeOfTest = 0.0f;
 int framerate = 0;
+float camposx = 30.f;
+float camposy = 50.f;
+float camposz = 50.f;
+
+//variables for the camera
+bool Right = false;
+bool Left = false;
+bool Up = false;
+bool Down = false;
+bool YUp = false;
+bool YDown = false;
+float movementSpeed = 5.0f;
 
 //float objColor[4] = { 0.5,0.2,0.8,1.0 };
 
 glm::vec3 sphereCoordinates = glm::vec3(0.0, 0.0, 0.0);
+
+
+void moveCamera(float deltaTime)
+{
+	if (Up)
+	{
+		camposz -= movementSpeed * deltaTime;
+	}
+	if (Down)
+	{
+		camposz += movementSpeed * deltaTime;
+	}
+	if (Left)
+	{
+		camposx -= movementSpeed * deltaTime;
+	}
+	if (Right)
+	{
+		camposx += movementSpeed * deltaTime;
+	}
+	if (YDown)
+	{
+		camposy += movementSpeed * deltaTime;
+	}
+	if (YUp)
+	{
+		camposy -= movementSpeed * deltaTime;
+	}
+}
 
 //OPENGL FUNCTION PROTOTYPES
 void display();				//called in winmain to draw everything to the screen
@@ -134,7 +175,7 @@ void display()
 	{
 		//cout << "framerate: " << framerate << " " << timeOfTest << endl;
 		printFile.printingMethod(framerate);
-		if (timeOfTest >= 23.0f)
+		if (timeOfTest >= 63.0f)
 		{
 			printFile.closeFile();
 			glutLeaveMainLoop();
@@ -143,6 +184,7 @@ void display()
 		timetest = 0.0f;
 	}
 
+	moveCamera(fDeltaTime);
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -152,19 +194,27 @@ void display()
 		glm::vec3(1.0f, 1.0f, 1.0f),
 		glm::vec3(1.0f, 0.5f, 0.5f)
 	};
-
 	for (int k = 0; k < pointLightColors.size(); k++)
 	{
-		/*glUniform3f(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "SpotLightPos"), 1.f, 1.f, 1.f);
-		glUniform3f(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "light_ambient"), pointLightColors[k].x * 0.1, pointLightColors[k].y * 0.1, pointLightColors[k].z * 0.1);
-		glUniform3f(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "light_diffuse"), pointLightColors[k].x, pointLightColors[k].y, pointLightColors[k].z);
-		glUniform3f(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "light_specular"), pointLightColors[k].x, pointLightColors[k].y, pointLightColors[k].z);
-		glUniform1f(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "pointLights[0].constant"), 1.0f);
-		glUniform1f(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "pointLights[0].linear"), 0.09);
-		glUniform1f(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "pointLights[0].quadratic"), 0.032);*/
+		glUniform3f(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "light.position"), camposx, camposy, camposz);
+		glUniform3f(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "light.direction"), 0, 0, 0);
+		glUniform1f(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "light.ambient"), glm::cos(glm::radians(12.5f)));
+		glUniform1f(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "light.outerCutOff"), glm::cos(glm::radians(17.5f)));
+		glUniform3f(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "viewPos"), camposx, camposy, camposz);
+
+		glUniform3f(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "light.ambient"), 0.1f, 0.1f, 0.1f);
+		glUniform3f(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "light.diffuse"), 0.8f, 0.8f, 0.8f);
+		glUniform3f(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "light.specular"), 1.0f, 1.0f, 1.0f);
+		glUniform1f(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "light.constant"), 1.0f);
+		glUniform1f(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "light.linear"), 0.09f);
+		glUniform1f(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "light.quadratic"), 0.032f);
+
+		glUniform1f(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "material.shininess"), 32.0f);
+		glUniform1i(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "material.diffuse"), 0);
+		glUniform1i(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "material.specular"), 1);
 	}
 
-	glUseProgram(myShader->GetProgramObjID());  // use the shader
+	//glUseProgram(myShader->GetProgramObjID());  // use the shader
 
 	//glCullFace(GL_BACK);
 
@@ -175,7 +225,7 @@ void display()
 	//amount = 0;
 
 	//Set the projection matrix in the shader
-	GLuint projMatLocation = glGetUniformLocation(myShader->GetProgramObjID(), "ProjectionMatrix");
+	GLuint projMatLocation = glGetUniformLocation(myPointLightShader->GetProgramObjID(), "ProjectionMatrix");
 	glUniformMatrix4fv(projMatLocation, 1, GL_FALSE, &ProjectionMatrix[0][0]);
 
 	glm::mat4 viewingMatrix = glm::mat4(1.0f);
@@ -185,14 +235,14 @@ void display()
 
 	glm::vec3 modelCoords = pos;
 
-	viewingMatrix = glm::lookAt(glm::vec3(30, 50, 50), glm::vec3(pos.x, pos.y, pos.z), glm::vec3(0.0f, 1.0f, 0.0));
+	viewingMatrix = glm::lookAt(glm::vec3(camposx, camposy, camposy), glm::vec3(pos.x, pos.y, pos.z), glm::vec3(0.0f, 1.0f, 0.0));
 
-	glUniformMatrix4fv(glGetUniformLocation(myShader->GetProgramObjID(), "ViewMatrix"), 1, GL_FALSE, &viewingMatrix[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "ViewMatrix"), 1, GL_FALSE, &viewingMatrix[0][0]);
 
 	glm::mat4 modelmatrix = glm::translate(glm::mat4(1.0f), pos);
 	//modelmatrix = glm::rotate(modelmatrix, rotateRadians, glm::vec3(0.0, 1.0, 0.0));
 	ModelViewMatrix = viewingMatrix * modelmatrix;
-	glUniformMatrix4fv(glGetUniformLocation(myShader->GetProgramObjID(), "ModelViewMatrix"), 1, GL_FALSE, &ModelViewMatrix[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "ModelViewMatrix"), 1, GL_FALSE, &ModelViewMatrix[0][0]);
 
 
 
@@ -247,9 +297,7 @@ void init()
 		cout << "failed to load shader for point light" << endl;
 	}
 
-
-
-	glUseProgram(myShader->GetProgramObjID());  // use the shader
+	glUseProgram(myPointLightShader->GetProgramObjID());  // use the shader
 
 	glEnable(GL_TEXTURE_2D);
 
@@ -261,7 +309,7 @@ void init()
 
 	sphere0.setRadius(30);
 	sphere0.setCentre(0.0, 0.0, 0.0);
-	sphere0.constructGeometry(myShader, 20);
+	sphere0.constructGeometry(myPointLightShader, 1000);
 }
 
 void special(int key, int x, int y)
@@ -276,17 +324,62 @@ void specialUp(int key, int x, int y)
 
 void keyboard(unsigned char key, int x, int y)
 {
-
+	switch (key)
+	{
+	case 27:
+		glutLeaveMainLoop(); //glutDestroyWindow(window);
+		break;
+	case 'd':
+		Right = true;
+		break;
+	case 'w':
+		Up = true;
+		break;
+	case 's':
+		Down = true;
+		break;
+	case 'a':
+		Left = true;
+		break;
+	case 'q':
+		YUp = true;
+		break;
+	case 'e':
+		YDown = true;
+		break;
+	}
 }
 
 void keyboardUp(unsigned char key, int x, int y)
 {
-
+	switch (key)
+	{
+	case 27:
+		glutLeaveMainLoop(); //glutDestroyWindow(window);
+		break;
+	case 'd':
+		Right = false;
+		break;
+	case 'w':
+		Up = false;
+		break;
+	case 's':
+		Down = false;
+		break;
+	case 'a':
+		Left = false;
+		break;
+	case 'q':
+		YUp = false;
+		break;
+	case 'e':
+		YDown = false;
+		break;
+	}
 }
 
 void processKeys()
 {
-
 
 }
 
@@ -307,6 +400,7 @@ void idle()
 	//call the display function again on idle
 	glutPostRedisplay();
 }
+
 /**************** END OPENGL FUNCTIONS *************************/
 
 int main(int argc, char **argv)
