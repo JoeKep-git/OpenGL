@@ -134,7 +134,7 @@ void display()
 	{
 		//cout << "framerate: " << framerate << " " << timeOfTest << endl;
 		printFile.printingMethod(framerate);
-		if (timeOfTest >= 23.0f)
+		if (timeOfTest >= 63.0f)
 		{
 			printFile.closeFile();
 			glutLeaveMainLoop();
@@ -185,7 +185,7 @@ void display()
 
 	glm::vec3 modelCoords = pos;
 
-	viewingMatrix = glm::lookAt(glm::vec3(30, 50, 50), glm::vec3(pos.x, pos.y, pos.z), glm::vec3(0.0f, 1.0f, 0.0));
+	viewingMatrix = glm::lookAt(glm::vec3(pos.x-2.5, pos.y -2.5, pos.z - 2.5), glm::vec3(pos.x, pos.y, pos.z), glm::vec3(0.0f, 1.0f, 0.0));
 
 	glUniformMatrix4fv(glGetUniformLocation(myShader->GetProgramObjID(), "ViewMatrix"), 1, GL_FALSE, &viewingMatrix[0][0]);
 
@@ -259,9 +259,9 @@ void init()
 
 	cout << " loading model " << endl;
 
-	sphere0.setRadius(30);
+	sphere0.setRadius(2);
 	sphere0.setCentre(0.0, 0.0, 0.0);
-	sphere0.constructGeometry(myShader, 20);
+	sphere0.constructGeometry(myShader, 3000);
 }
 
 void special(int key, int x, int y)
