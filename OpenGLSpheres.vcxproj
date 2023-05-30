@@ -51,26 +51,6 @@
   <ItemGroup>
     <None Include="glslfiles\basic.frag" />
     <None Include="glslfiles\basic.vert" />
-    <None Include="glslfiles\basicAmbient.frag" />
-    <None Include="glslfiles\basicAmbient.vert" />
-    <None Include="glslfiles\basicDiffuseDirection.frag" />
-    <None Include="glslfiles\basicDiffuseDirection.vert" />
-    <None Include="glslfiles\basicDiffuseDistanceAttenuation.frag" />
-    <None Include="glslfiles\basicDiffuseDistanceAttenuation.vert" />
-    <None Include="glslfiles\basicDiffusePosition.frag" />
-    <None Include="glslfiles\basicDiffusePosition.vert" />
-    <None Include="glslfiles\basicSpecular.frag" />
-    <None Include="glslfiles\basicSpecular.vert" />
-    <None Include="glslfiles\basicSpecularSpotlight.frag" />
-    <None Include="glslfiles\basicSpecularSpotlight.vert" />
-    <None Include="glslfiles\basicTransformations.frag" />
-    <None Include="glslfiles\basicTransformations.vert" />
-    <None Include="glslfiles\basicTransformationsWithDisplacement.frag" />
-    <None Include="glslfiles\basicTransformationsWithDisplacement.vert" />
-    <None Include="glslfiles\point_light.frag" />
-    <None Include="glslfiles\point_light.vert" />
-    <None Include="glslfiles\point_light_improved.frag" />
-    <None Include="glslfiles\point_light_improved.vert" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{472FEE38-34C3-4DC2-8DFC-871F6F80345E}</ProjectGuid>

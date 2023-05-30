@@ -127,70 +127,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="glslfiles\basicTransformationsWithDisplacement.vert">
-      <Filter>headers\glslfiles</Filter>
-    </None>
     <None Include="glslfiles\basic.frag">
       <Filter>headers\glslfiles</Filter>
     </None>
     <None Include="glslfiles\basic.vert">
-      <Filter>headers\glslfiles</Filter>
-    </None>
-    <None Include="glslfiles\basicTransformations.frag">
-      <Filter>headers\glslfiles</Filter>
-    </None>
-    <None Include="glslfiles\basicTransformations.vert">
-      <Filter>headers\glslfiles</Filter>
-    </None>
-    <None Include="glslfiles\basicTransformationsWithDisplacement.frag">
-      <Filter>headers\glslfiles</Filter>
-    </None>
-    <None Include="glslfiles\basicAmbient.frag">
-      <Filter>headers\glslfiles</Filter>
-    </None>
-    <None Include="glslfiles\basicAmbient.vert">
-      <Filter>headers\glslfiles</Filter>
-    </None>
-    <None Include="glslfiles\basicDiffuseDirection.frag">
-      <Filter>headers\glslfiles</Filter>
-    </None>
-    <None Include="glslfiles\basicDiffuseDirection.vert">
-      <Filter>headers\glslfiles</Filter>
-    </None>
-    <None Include="glslfiles\basicDiffuseDistanceAttenuation.frag">
-      <Filter>headers\glslfiles</Filter>
-    </None>
-    <None Include="glslfiles\basicDiffuseDistanceAttenuation.vert">
-      <Filter>headers\glslfiles</Filter>
-    </None>
-    <None Include="glslfiles\basicDiffusePosition.frag">
-      <Filter>headers\glslfiles</Filter>
-    </None>
-    <None Include="glslfiles\basicDiffusePosition.vert">
-      <Filter>headers\glslfiles</Filter>
-    </None>
-    <None Include="glslfiles\basicSpecular.frag">
-      <Filter>headers\glslfiles</Filter>
-    </None>
-    <None Include="glslfiles\basicSpecular.vert">
-      <Filter>headers\glslfiles</Filter>
-    </None>
-    <None Include="glslfiles\basicSpecularSpotlight.frag">
-      <Filter>headers\glslfiles</Filter>
-    </None>
-    <None Include="glslfiles\basicSpecularSpotlight.vert">
-      <Filter>headers\glslfiles</Filter>
-    </None>
-    <None Include="glslfiles\point_light_improved.frag">
-      <Filter>headers\glslfiles</Filter>
-    </None>
-    <None Include="glslfiles\point_light_improved.vert">
-      <Filter>headers\glslfiles</Filter>
-    </None>
-    <None Include="glslfiles\point_light.frag">
-      <Filter>headers\glslfiles</Filter>
-    </None>
-    <None Include="glslfiles\point_light.vert">
       <Filter>headers\glslfiles</Filter>
     </None>
   </ItemGroup>
