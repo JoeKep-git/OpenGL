@@ -2,17 +2,17 @@
 //#include <GLFW/glfw3.h>
 using namespace std;
 
-/*
-* 
-* 
-* 
-* For different light sources i need to add shader info from another light and add it onto the main shader and change the variable names,
-* refer to notes week 3 multiple light sources
-* 
-* 
-* 
-* 
-*/
+/******************************************************************************
+
+File        : main.cpp
+
+Date        : 2023
+
+Author      : Joey Keputa
+
+Description : This runs the program and calls the functions to create the sphere
+			  and the shader. Modified code from Graphics 2 module.
+******************************************************************************/
 
 //--- OpenGL ---
 #include "GL\glew.h"
