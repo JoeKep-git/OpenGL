@@ -189,7 +189,7 @@ void init()
 	sphere0.setRadius(2);
 	sphere0.setCentre(0.0, 0.0, 0.0);
 	//change levels to change the amount of detail in the sphere
-	sphere0.constructGeometry(myShader, 3000);
+	sphere0.constructGeometry(myShader, 1000);
 }
 
 void idle()

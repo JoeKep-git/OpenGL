@@ -44,6 +44,8 @@ CShader::~CShader()
  *
  *	Returns	: true	- the shaders were loaded successfully 
  *			  false	- couldn't load the shaders
+ * 
+ *  Note	: This method is based on the method of the same name from the Graphics 2 module
  */
 bool CShader::CreateShaderProgram(string stName, char* strVertexShaderFileName, char* strFragmentShaderFileName)
 {
