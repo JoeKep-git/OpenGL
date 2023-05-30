@@ -27,7 +27,6 @@ Description : This runs the program and calls the functions to create the sphere
 
 #include "GL\freeglut.h"
 
-#include "Images\FreeImage.h"
 
 #include "shaders\Shader.h"
 #include "sphere\Sphere.h"
@@ -37,14 +36,12 @@ Description : This runs the program and calls the functions to create the sphere
 CShader* myShader;  ///shader object 
 
 //MODEL LOADING
-#include "3DStruct\threeDModel.h"
 #include "Obj/OBJLoader.h"
 #include <future>
 
 float amount = 0;
 float temp = 0.002f;
 
-CThreeDModel sphereModel;
 Sphere sphere0;
 ///END MODEL LOADING
 
