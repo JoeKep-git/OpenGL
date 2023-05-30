@@ -3,6 +3,18 @@
 #include "../glm/fwd.hpp"
 #include <iostream>
 
+/******************************************************************************
+
+File        : Sphere.cpp
+
+Date        : 2023
+
+Author      : Joey Keputa/Stephen Laycock
+
+Description : This file handles the creation of a sphere object. Code provided
+				by Stephen Laycock during Graphics 2 module.
+******************************************************************************/
+
 const double PI = 3.14159265358979323846f;  
 
 

@@ -35,9 +35,6 @@ using namespace std;
 #include "printToFile.h"
 
 CShader* myShader;  ///shader object 
-CShader* myBasicShader;
-CShader* myTextureShader;
-CShader* myPointLightShader;
 
 //MODEL LOADING
 #include "3DStruct\threeDModel.h"
@@ -46,8 +43,7 @@ CShader* myPointLightShader;
 
 float amount = 0;
 float temp = 0.002f;
-	
-COBJLoader objLoader;
+
 CThreeDModel sphereModel;
 Sphere sphere0;
 ///END MODEL LOADING
@@ -62,33 +58,12 @@ glm::mat4 objectRotation;
 glm::vec3 translation = glm::vec3(0.0, 0.0, 0.0);
 glm::vec3 pos = glm::vec3(0.0f,0.0f,0.0f); //vector for the position of the object.
 
-//Material properties
-float Material_Ambient[4] = {1.f, 1.f, 1.f, 1.0f};
-float Material_Diffuse[4] = {0.99f, 0.99f, 0.99f, 1.0f};
-float Material_Specular[4] = {1.0f,1.0f,1.0f,1.0f};
-float Material_Shininess = 40;
 
-//Light Properties
-float Light_Ambient_And_Diffuse[4] = {0.5f, 0.5f, 0.5f, 1.0f};
-float Light_Specular[4] = {0.9f,0.9f,0.9f,1.0f};
-float LightPos[4] = {0.0f, 50.0f, 1.0f, 0.0f};
-float spotLightPos[4];
-float spotLightDirection[4] = { 0.0, 0.0, -1.0, 0.0f };
-
-
-//
 int	mouse_x=0, mouse_y=0;
 bool LeftPressed = false;
 int screenWidth=600, screenHeight=600;
 
 int cam = 0;
-
-//variables for movement
-//float spin=180.0f;
-//float speed=0.0f;
-//float strafe = 0.0f;
-//float ymovement = 0.0f;
-//float rotateRadians = 0.0f;
 
 /*Variables for timing*/
 float fDeltaTime = 0.0f;
@@ -98,9 +73,6 @@ float timetest = 0.0f;
 float timeOfTest = 0.0f;
 int framerate = 0;
 
-//float objColor[4] = { 0.5,0.2,0.8,1.0 };
-
-glm::vec3 sphereCoordinates = glm::vec3(0.0, 0.0, 0.0);
 
 //OPENGL FUNCTION PROTOTYPES
 void display();				//called in winmain to draw everything to the screen
@@ -146,33 +118,9 @@ void display()
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glUseProgram(myPointLightShader->GetProgramObjID());  // use the shader
-
-	vector<glm::vec3> pointLightColors = {
-		glm::vec3(1.0f, 1.0f, 1.0f),
-		glm::vec3(1.0f, 0.5f, 0.5f)
-	};
-
-	for (int k = 0; k < pointLightColors.size(); k++)
-	{
-		/*glUniform3f(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "SpotLightPos"), 1.f, 1.f, 1.f);
-		glUniform3f(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "light_ambient"), pointLightColors[k].x * 0.1, pointLightColors[k].y * 0.1, pointLightColors[k].z * 0.1);
-		glUniform3f(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "light_diffuse"), pointLightColors[k].x, pointLightColors[k].y, pointLightColors[k].z);
-		glUniform3f(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "light_specular"), pointLightColors[k].x, pointLightColors[k].y, pointLightColors[k].z);
-		glUniform1f(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "pointLights[0].constant"), 1.0f);
-		glUniform1f(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "pointLights[0].linear"), 0.09);
-		glUniform1f(glGetUniformLocation(myPointLightShader->GetProgramObjID(), "pointLights[0].quadratic"), 0.032);*/
-	}
-
 	glUseProgram(myShader->GetProgramObjID());  // use the shader
 
 	//glCullFace(GL_BACK);
-
-	//Part for displacement shader.
-	//amount += temp;
-	//if (amount > 1.0f || amount < -1.5f)
-	//	temp = -temp;
-	//amount = 0;
 
 	//Set the projection matrix in the shader
 	GLuint projMatLocation = glGetUniformLocation(myShader->GetProgramObjID(), "ProjectionMatrix");
@@ -231,24 +179,6 @@ void init()
 		cout << "failed to load shader" << endl;
 	}		
 
-	myBasicShader = new CShader();
-	if(!myBasicShader->CreateShaderProgram("Basic", "glslfiles/basic.vert", "glslfiles/basic.frag"))
-	{
-		cout << "failed to load shader" << endl;
-	}	
-	myTextureShader = new CShader();
-	if (!myTextureShader->CreateShaderProgram("TextureOnly", "glslfiles/basicTransformations.vert", "glslfiles/basicTransformations.frag"))
-	{
-		cout << "failed to load texture only shader" << endl;
-	}
-	myPointLightShader = new CShader();
-	if (!myPointLightShader->CreateShaderProgram("PointLight", "glslfiles/basicSpecularSpotlight.vert", "glslfiles/basicSpecularSpotlight.frag"))
-	{
-		cout << "failed to load shader for point light" << endl;
-	}
-
-
-
 	glUseProgram(myShader->GetProgramObjID());  // use the shader
 
 	glEnable(GL_TEXTURE_2D);
@@ -261,49 +191,12 @@ void init()
 
 	sphere0.setRadius(2);
 	sphere0.setCentre(0.0, 0.0, 0.0);
+	//change levels to change the amount of detail in the sphere
 	sphere0.constructGeometry(myShader, 3000);
-}
-
-void special(int key, int x, int y)
-{
-
-}
-
-void specialUp(int key, int x, int y)
-{
-
-}
-
-void keyboard(unsigned char key, int x, int y)
-{
-
-}
-
-void keyboardUp(unsigned char key, int x, int y)
-{
-
-}
-
-void processKeys()
-{
-
-
-}
-
-
-void updateTransform(float xinc, float yinc, float zinc)
-{
-
 }
 
 void idle()
 {
-	//spin += speed;
-	//if(spin > 360)
-	//	spin = 0;
-
-	//processKeys();
-
 	//call the display function again on idle
 	glutPostRedisplay();
 }
@@ -339,11 +232,6 @@ int main(int argc, char **argv)
 	glutReshapeFunc(reshape);
 	//specify which function will be called to refresh the screen.
 	glutDisplayFunc(display);
-
-	glutSpecialFunc(special);
-	glutSpecialUpFunc(specialUp);
-	glutKeyboardFunc(keyboard);
-	glutKeyboardUpFunc(keyboardUp);
 
 	glutIdleFunc(idle);
 
